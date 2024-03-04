@@ -38,9 +38,30 @@
         const tituloEncabezado = document.getElementById('encabezado')
         const inputEncabezado = document.getElementById('inputEncabezado')
 
+        let counter = 0;
+        let tituloAnterior = tituloEncabezado.innerHTML;
+
         function modificarEncabezado() {
-            /* Tu código aquí */
+            tituloAnterior = tituloEncabezado.innerHTML;
+            console.log(tituloAnterior);
+            if (inputEncabezado.value.trim().length){
+                tituloEncabezado.innerHTML = inputEncabezado.value;
+                counter++;
+            } else{
+                alert("El encabezado no puede estar vacio");
+            }
+
+            if (counter == 2){
+                btnUndo.disabled = false;
+            }
+           inputEncabezado.value = "";
         }
+
+        btnUndo.addEventListener('click',() => {
+            tituloEncabezado.innerHTML = tituloAnterior;
+            btnUndo.disabled = true;
+            counter = 1;
+        });
     </script>
 </body>
 
