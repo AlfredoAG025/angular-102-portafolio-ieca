@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   private subtitle = 'fundamentos-ag-private';
 
   email = "edu@email.com"
-  btnDisabled = true
+  btnDisabled = true;
 
   contadorOvejas = 1;
 
@@ -59,12 +59,21 @@ export class AppComponent implements OnInit {
     this.persona.nombre = ''
   }
 
+  eliminarPersona(i: number){
+    this.listaPersonas.splice(i, 1);
+  }
+
   contarOveja() {
     this.contadorOvejas += 1;
   }
 
   handlerRegistro() {
     console.log(this.registroInputs)
+  }
+
+  limpiarFormulario() {
+    this.registroInputs.email = "";
+    this.registroInputs.passkey = "";
   }
 
   ngOnInit(): void {
@@ -76,6 +85,13 @@ export class AppComponent implements OnInit {
       .then((data) => {
         console.log(data)
         this.pokedex = data.results
+        this.pokedex.forEach((pokemon) => {
+          fetch(`${pokemon.url}`)
+              .then((response) => response.json())
+              .then((data) => {
+                pokemon.image = data.sprites.front_default
+              })
+        })
       })
       .then(() => console.log('ngOnInit end...'))
   }
